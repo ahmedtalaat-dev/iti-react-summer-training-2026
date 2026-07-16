@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30-Day React.js Mastery Roadmap</title>
+    
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        reactblue: '#61dafb',
+                        darkbg: '#0f172a',
+                        darkcard: '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Main Application Script -->
+    <script src="script.js" defer></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-cyan-500 selection:text-slate-900">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-slate-950/80 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <!-- Spinning React Logo (SVG) -->
+                <svg class="w-8 h-8 text-cyan-400 animate-[spin_12s_linear_infinite]" viewBox="0 0 841.9 595.3">
+                    <g fill="none" stroke="currentColor" stroke-width="20">
+                        <ellipse rx="386" ry="147" cx="420.9" cy="297.6"/>
+                        <ellipse rx="386" ry="147" cx="420.9" cy="297.6" transform="rotate(60 420.9 297.6)"/>
+                        <ellipse rx="386" ry="147" cx="420.9" cy="297.6" transform="rotate(120 420.9 297.6)"/>
+                    </g>
+                    <circle cx="420.9" cy="297.6" r="45" fill="currentColor"/>
+                </svg>
+                <span class="font-extrabold text-lg sm:text-xl bg-gradient-to-r from-cyan-400 to-indigo-500 bg-clip-text text-transparent">React 30 Mastery</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="resetBtn" class="px-3 py-1.5 text-xs font-semibold text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 rounded-lg transition-all duration-200">
+                    Reset Data
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Hero Dashboard Frame -->
+        <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl p-6 sm:p-8 mb-8 relative overflow-hidden shadow-2xl">
+            <div class="absolute -right-16 -top-16 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <!-- Title & Subtitle -->
+                <div class="lg:col-span-2">
+                    <span class="px-3 py-1 text-xs font-semibold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 rounded-full uppercase tracking-wider">30-Day Syllabus</span>
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mt-3 tracking-tight">30-Day React.js <span class="text-cyan-400">Mastery</span></h1>
+                    <p class="text-slate-400 mt-2 text-sm sm:text-base max-w-xl">
+                        A rigorous step-by-step roadmap designed to transition developers from baseline JS to corporate-grade single-page engineering. Built with core interactive trackers.
+                    </p>
+                </div>
+
+                <!-- Circular Progress Ring / Graphic -->
+                <div class="bg-slate-950/50 border border-slate-800/80 rounded-xl p-6 flex flex-col items-center justify-center text-center">
+                    <div class="relative w-28 h-28 flex items-center justify-center">
+                        <!-- SVG Ring -->
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="50" class="text-slate-800" stroke-width="8" stroke="currentColor" fill="transparent"/>
+                            <circle cx="60" cy="60" r="50" id="progressRingCircle" class="text-cyan-400 transition-all duration-500" stroke-width="10" stroke-dasharray="314.16" stroke-dashoffset="314.16" stroke-linecap="round" stroke="currentColor" fill="transparent"/>
+                        </svg>
+                        <div class="absolute flex flex-col items-center">
+                            <span id="progressPercentage" class="text-2xl font-black text-white">0%</span>
+                            <span class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Done</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span id="progressText" class="text-sm font-semibold text-slate-300">0 of 30 Days Mastered</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Two-Column Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- LEFT COLUMN: Sticky Dashboard Tools -->
+            <div class="lg:col-span-1 space-y-6 lg:sticky lg:top-24 h-fit">
+                
+                <!-- Study Buddy & pomodoro timer -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            </span>
+                            <h3 class="font-bold text-slate-200 text-sm">Study Tracker Routine</h3>
+                        </div>
+                        <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono">Standard Match</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+                        To master React effectively, dedicate 3–5 hours daily divided between: 1 hr Theory, 1 hr Resources, 1-2 hrs Practice, and 1 hr Revision/Code.
+                    </p>
+                    
+                    <!-- Integrated Study Timer Component -->
+                    <div class="bg-slate-950 border border-slate-800/80 rounded-lg p-4 text-center">
+                        <span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Study Session Focus Timer</span>
+                        <div id="timerDisplay" class="text-3xl font-mono font-bold text-cyan-400 my-1">50:00</div>
+                        <div class="flex items-center justify-center space-x-2 mt-2">
+                            <button id="timerToggle" class="px-3 py-1 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs rounded transition-all duration-200">Start Session</button>
+                            <button id="timerReset" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs rounded transition-all duration-200">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource Center links -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg">
+                    <h3 class="font-bold text-slate-200 text-sm border-b border-slate-800 pb-3 mb-3">Core Reference Hub</h3>
+                    <ul class="space-y-2.5 text-xs">
+                        <li>
+                            <a href="https://react.dev" target="_blank" class="flex items-center justify-between p-2 rounded bg-slate-950 hover:bg-slate-950/80 text-slate-300 hover:text-cyan-300 border border-transparent hover:border-cyan-500/20 transition-all duration-200">
+                                <span>React Official Docs</span>
+                                <span class="text-[10px] text-cyan-400 font-mono">Go &rarr;</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://vitejs.dev" target="_blank" class="flex items-center justify-between p-2 rounded bg-slate-950 hover:bg-slate-950/80 text-slate-300 hover:text-cyan-300 border border-transparent hover:border-cyan-500/20 transition-all duration-200">
+                                <span>Vite Build Environment</span>
+                                <span class="text-[10px] text-cyan-400 font-mono">Go &rarr;</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://reactrouter.com" target="_blank" class="flex items-center justify-between p-2 rounded bg-slate-950 hover:bg-slate-950/80 text-slate-300 hover:text-cyan-300 border border-transparent hover:border-cyan-500/20 transition-all duration-200">
+                                <span>React Router Library</span>
+                                <span class="text-[10px] text-cyan-400 font-mono">Go &rarr;</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://redux-toolkit.js.org" target="_blank" class="flex items-center justify-between p-2 rounded bg-slate-950 hover:bg-slate-950/80 text-slate-300 hover:text-cyan-300 border border-transparent hover:border-cyan-500/20 transition-all duration-200">
+                                <span>Redux Toolkit Core</span>
+                                <span class="text-[10px] text-cyan-400 font-mono">Go &rarr;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: Interactive Day-by-Day Syllabus Feed -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- Search and Filters Panel -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 shadow-lg">
+                    <!-- Search Input -->
+                    <div class="relative flex-1">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                            <!-- Search Icon (SVG) -->
+                            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </span>
+                        <input type="text" id="searchInput" placeholder="Search topics (e.g. Hooks, Context, State)..." class="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 text-sm transition-all duration-200">
+                    </div>
+
+                    <!-- Filter Selection Chips -->
+                    <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 md:pb-0">
+                        <button id="btn-all" class="filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-cyan-500 text-slate-950 transition-all duration-200">All</button>
+                        <button id="btn-week1" class="filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-950 text-slate-400 hover:text-slate-200 transition-all duration-200">W1</button>
+                        <button id="btn-week2" class="filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-950 text-slate-400 hover:text-slate-200 transition-all duration-200">W2</button>
+                        <button id="btn-week3" class="filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-950 text-slate-400 hover:text-slate-200 transition-all duration-200">W3</button>
+                        <button id="btn-week4" class="filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-950 text-slate-400 hover:text-slate-200 transition-all duration-200">W4</button>
+                        <button id="btn-incomplete" class="filter-btn px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-950 text-slate-400 hover:text-slate-200 transition-all duration-200">Todo</button>
+                    </div>
+                </div>
+
+                <!-- Feed Output Container -->
+                <div id="roadmapFeed" class="space-y-4">
+                    <!-- Cards will be dynamically injected here by Javascript -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="hidden text-center py-12 bg-slate-900 border border-slate-800 rounded-xl">
+                    <p class="text-slate-400 text-sm">No days match your current search queries or filters.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Toast Notification Banner -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-10 opacity-0 bg-slate-900 border border-cyan-500/30 text-slate-100 px-4 py-3 rounded-xl shadow-2xl transition-all duration-300 flex items-center space-x-3 max-w-sm pointer-events-none">
+        <span class="flex h-3 w-3 relative">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+        </span>
+        <span id="toastMessage" class="text-xs font-medium">Concept updated dynamically!</span>
+    </div>
+
+</body>
+</html>
