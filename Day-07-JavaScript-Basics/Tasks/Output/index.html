@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JavaScript Assignments</title>
+  </head>
+  
+  <body style="font-family: Arial, sans-serif; margin: 20px">
+    <h1 style="color: navy">JavaScript Assignments</h1>
+
+    <div style="border: 1px solid gray; padding: 15px; margin-bottom: 15px">
+      <h2>Task 1 - Tip of the Day</h2>
+      <p id="tip"></p>
+    </div>
+
+    <div style="border: 1px solid gray; padding: 15px; margin-bottom: 15px">
+      <h2>Task 2 - Current Date & Time</h2>
+      <button onclick="showCurrentDateTime()" style="padding: 8px 15px">
+        Show Date & Time
+      </button>
+      <p id="dateTime"></p>
+    </div>
+
+    <div style="border: 1px solid gray; padding: 15px; margin-bottom: 15px">
+      <h2>Task 5 - Full Name Validation Using Pattern</h2>
+
+      <form>
+        <input
+          type="text"
+          placeholder="Enter Full Name"
+          pattern="^[A-Za-z]{4,}( [A-Za-z]{3,})+$"
+          required
+          style="padding: 8px; width: 250px"
+        />
+
+        <button type="submit" style="padding: 8px 15px">Submit</button>
+      </form>
+    </div>
+
+    <div style="border: 1px solid gray; padding: 15px">
+      <h2>Task 8 - Birth Date Validation</h2>
+
+      <button onclick="showBirthDatePrompt()" style="padding: 8px 15px">
+        Show Date
+      </button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
