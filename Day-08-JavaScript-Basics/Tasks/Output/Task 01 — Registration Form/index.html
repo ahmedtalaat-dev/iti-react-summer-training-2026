@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Registration Form</title>
+  </head>
+  <body>
+    <h2>Registration Form</h2>
+
+    <form
+      action="thankyou.html"
+      method="get"
+      onsubmit="return validateForm(event);"
+    >
+      <label>Full Name:</label>
+      <input
+        type="text"
+        id="fullname"
+        name="fullname"
+        placeholder="Enter your Name:"
+        required
+      />
+      <span id="nameError" class="error"></span>
+
+      <br /><br />
+
+      <label>Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <br /><br />
+
+      <label>City:</label>
+      <select id="city" name="city">
+        <option value="Cairo">Cairo</option>
+        <option value="Alexandria">Alexandria</option>
+        <option value="Giza">Giza</option>
+        <option value="Mansoura">Mansoura</option>
+      </select>
+
+      <br /><br />
+
+      <label>Password:</label>
+      <input type="password" id="password" required />
+
+      <br /><br />
+
+      <label>Repeat Password:</label>
+      <input type="password" id="repeatPassword" required />
+      <span id="passError" class="error"></span>
+
+      <br /><br />
+
+      <input type="checkbox" id="terms" required />
+      I accept the terms and conditions
+
+      <br /><br />
+
+      <input type="submit" value="Register" />
+    </form>
+
+    <script>
+      let fullNameValid = false;
+      let passwordValid = false;
+
+      let fullName = document.getElementById("fullname");
+      let password = document.getElementById("password");
+      let repeatPassword = document.getElementById("repeatPassword");
+
+      fullName.onfocus = function () {
+        this.style.border = "solid 1px blue";
+      };
+
+      fullName.onblur = function () {
+        this.style.border = "";
+        validateName();
+      };
+
+    
+      function validateName() {
+        let nameError = document.getElementById("nameError");
+
+        let name = fullName.value.trim();
+
+        if (name.length <= 3) {
+          nameError.innerText = "invalid name";
+
+          fullName.focus();
+          fullName.select();
+
+          fullNameValid = false;
+        } else {
+          nameError.innerText = "";
+          fullNameValid = true;
+        }
+      }
+
+      repeatPassword.onblur = validatePassword;
+
+      function validatePassword() {
+        let passError = document.getElementById("passError");
+
+        if (
+          password.value === "" ||
+          repeatPassword.value === "" ||
+          password.value !== repeatPassword.value
+        ) {
+          passError.innerText =
+            "password and repeat password should be the same";
+
+          passwordValid = false;
+        } else {
+          passError.innerText = "";
+          passwordValid = true;
+        }
+      }
+
+      function validateForm(e) {
+        validateName();
+        validatePassword();
+
+        if (fullNameValid && passwordValid) {
+          return true;
+        }
+
+        alert("Plz correct the validation errors first.");
+
+        e.preventDefault();
+        return false;
+      }
+    </script>
+  </body>
+</html>
