@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Fade Gallery</title>
+
+    <style>
+      body {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .gallery img {
+        width: 250px;
+        height: 180px;
+        margin: 10px;
+        border: 2px solid black;
+
+        opacity: 1;
+        transition: opacity 1s;
+      }
+
+      .gallery img:hover {
+        opacity: 0.3;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Photo Gallery</h2>
+
+    <div class="gallery">
+      <img src="https://picsum.photos/id/1015/250/180" alt="Image 1" />
+      <img src="https://picsum.photos/id/1016/250/180" alt="Image 2" />
+      <img src="https://picsum.photos/id/1018/250/180" alt="Image 3" />
+      <img src="https://picsum.photos/id/1025/250/180" alt="Image 4" />
+    </div>
+  </body>
+</html>
