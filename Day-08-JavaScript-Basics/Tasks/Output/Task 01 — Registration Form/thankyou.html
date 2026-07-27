@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Thank You</title>
+  </head>
+  <body>
+    <h2 id="message"></h2>
+
+    <script>
+      let params = new URLSearchParams(window.location.search);
+      let fullName = params.get("fullname");
+
+      document.getElementById("message").innerText =
+        "Thank you, " + fullName + " for registering in our website";
+    </script>
+  </body>
+</html>
