@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Animated Search Box</title>
+  </head>
+  <body>
+    <input
+      type="text"
+      id="searchBox"
+      placeholder="Search..."
+      style="width: 150px; height: 30px; font-size: 16px"
+    />
+
+    <script>
+      const searchBox = document.getElementById("searchBox");
+
+      let animation;
+
+      searchBox.addEventListener("focus", function () {
+        clearInterval(animation);
+
+        let width = searchBox.offsetWidth;
+
+        animation = setInterval(function () {
+          if (width < 300) {
+            width += 5;
+            searchBox.style.width = width + "px";
+          } else {
+            clearInterval(animation);
+          }
+        }, 10);
+      });
+
+      searchBox.addEventListener("blur", function () {
+        clearInterval(animation);
+
+        let width = searchBox.offsetWidth;
+
+        animation = setInterval(function () {
+          if (width > 150) {
+            width -= 5;
+            searchBox.style.width = width + "px";
+          } else {
+            clearInterval(animation);
+          }
+        }, 10);
+      });
+    </script>
+  </body>
+</html>
