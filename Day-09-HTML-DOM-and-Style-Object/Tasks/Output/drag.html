@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Drag and Drop</title>
+
+    <style>
+      #container {
+        margin-top: 20px;
+      }
+
+      #dropZone {
+        width: 100px;
+        height: 100px;
+        border: 2px solid black;
+        background-color: lightgray;
+        margin-top: 20px;
+      }
+
+      #dragImage {
+        width: 100px;
+        cursor: move;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <img id="dragImage" src="https://picsum.photos/100" draggable="true" />
+    </div>
+
+    <div id="dropZone"></div>
+
+    <script>
+      const image = document.getElementById("dragImage");
+      const dropZone = document.getElementById("dropZone");
+      const originalContainer = document.getElementById("container");
+
+      image.addEventListener("dragstart", function (e) {
+        e.dataTransfer.setData("text", e.target.id);
+      });
+
+      dropZone.addEventListener("dragover", function (e) {
+        e.preventDefault();
+      });
+
+      dropZone.addEventListener("drop", function (e) {
+        e.preventDefault();
+
+        const imageId = e.dataTransfer.getData("text");
+        const draggedImage = document.getElementById(imageId);
+
+        dropZone.appendChild(draggedImage);
+
+        dropZone.style.backgroundColor = "lightgreen";
+      });
+
+      document.addEventListener("dragend", function () {
+        if (image.parentElement !== dropZone) {
+          originalContainer.appendChild(image);
+        }
+      });
+    </script>
+  </body>
+</html>
