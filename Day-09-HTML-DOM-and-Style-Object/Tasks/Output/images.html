@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Image Slide Show</title>
+    <style>
+      #slider {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      #slide {
+        width: 500px;
+        height: 300px;
+        border: 1px solid black;
+      }
+
+      #description {
+        margin-top: 10px;
+        font-size: 18px;
+        display: none;
+      }
+
+      button {
+        margin: 10px;
+        padding: 8px 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="slider">
+      <img id="slide" src="" />
+
+      <div id="description"></div>
+
+      <br />
+
+      <button id="prevBtn">Prev</button>
+      <button id="nextBtn">Next</button>
+    </div>
+
+    <script>
+      const images = [
+        "https://picsum.photos/id/237/500/300",
+        "https://picsum.photos/id/1015/500/300",
+        "https://picsum.photos/id/1025/500/300",
+        "https://picsum.photos/id/1043/500/300",
+      ];
+
+      const descriptions = [
+        "Cute Dog",
+        "Mountain Landscape",
+        "Beautiful Parrot",
+        "Forest Road",
+      ];
+
+      let currentIndex = 0;
+
+      const slide = document.getElementById("slide");
+      const description = document.getElementById("description");
+      const nextBtn = document.getElementById("nextBtn");
+      const prevBtn = document.getElementById("prevBtn");
+
+      function showImage() {
+        slide.src = images[currentIndex];
+        description.textContent = descriptions[currentIndex];
+      }
+
+      showImage();
+
+      function nextImage() {
+        currentIndex++;
+
+        if (currentIndex >= images.length) {
+          currentIndex = 0;
+        }
+
+        showImage();
+      }
+
+      function prevImage() {
+        currentIndex--;
+
+        if (currentIndex < 0) {
+          currentIndex = images.length - 1;
+        }
+
+        showImage();
+      }
+
+      let slideshow = setInterval(nextImage, 2000);
+
+      slide.addEventListener("mouseover", function () {
+        description.style.display = "block";
+        clearInterval(slideshow);
+      });
+
+      slide.addEventListener("mouseout", function () {
+        description.style.display = "none";
+        slideshow = setInterval(nextImage, 2000);
+      });
+
+      nextBtn.addEventListener("mouseover", function () {
+        clearInterval(slideshow);
+      });
+
+      prevBtn.addEventListener("mouseover", function () {
+        clearInterval(slideshow);
+      });
+
+      nextBtn.addEventListener("mouseout", function () {
+        slideshow = setInterval(nextImage, 2000);
+      });
+
+      prevBtn.addEventListener("mouseout", function () {
+        slideshow = setInterval(nextImage, 2000);
+      });
+
+      nextBtn.addEventListener("click", nextImage);
+      prevBtn.addEventListener("click", prevImage);
+    </script>
+  </body>
+</html>
