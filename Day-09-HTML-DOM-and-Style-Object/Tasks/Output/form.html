@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gender Dropdown Assignment</title>
+</head>
+<body>
+
+<form>
+
+    <label>Enter Your Name:</label>
+    <br>
+    <input type="text" id="name">
+    <br><br>
+
+    <label>Select Gender:</label>
+    <br>
+    <select id="gender">
+        <option value="">Choose Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+    </select>
+
+</form>
+
+<br>
+
+<p id="result"></p>
+
+<script>
+
+const nameInput = document.getElementById("name");
+const genderSelect = document.getElementById("gender");
+const result = document.getElementById("result");
+
+function displayName() {
+
+    let name = nameInput.value;
+    let gender = genderSelect.value;
+
+    if (name !== "" && gender !== "") {
+
+        if (gender === "Male") {
+            result.textContent = "Your Name: Mr. " + name;
+        }
+        else {
+            result.textContent = "Your Name: Ms. " + name;
+        }
+
+    } else {
+        result.textContent = "";
+    }
+}
+
+nameInput.addEventListener("input", displayName);
+genderSelect.addEventListener("change", displayName);
+
+</script>
+
+</body>
+</html>
