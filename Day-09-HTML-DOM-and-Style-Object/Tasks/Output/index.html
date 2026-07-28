@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <title>DOM Assignment</title>
+  </head>
+  <body>
+    <div id="container">Existing Text</div>
+
+    <button onclick="addImage()">Add Image</button>
+    <button onclick="removeImage()">Remove Image</button>
+
+    <script>
+      let imgNode;
+
+      function addImage() {
+        imgNode = document.createElement("img");
+
+        imgNode.setAttribute(
+          "src",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcL1jEaO5sB8t7a7dho0p_9j1ye7DL-xeBEh_0rDWP8w&s=10",
+        );
+        imgNode.setAttribute("width", "200");
+
+        let container = document.getElementById("container");
+
+        container.appendChild(imgNode);
+
+        alert("Child Nodes = " + container.childNodes.length);
+      }
+
+      function removeImage() {
+        let container = document.getElementById("container");
+
+        let images = container.getElementsByTagName("img");
+
+        if (images.length > 0) {
+          container.removeChild(images[images.length - 1]);
+          alert("Child Nodes = " + container.childNodes.length);
+        }
+      }
+    </script>
+  </body>
+</html>
