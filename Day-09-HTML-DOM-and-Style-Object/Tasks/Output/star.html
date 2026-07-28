@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Star Rating</title>
+</head>
+<body style="text-align: center;">
+
+<img id="star"
+     src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png"
+     width="100"
+     style="cursor:pointer;">
+
+<script>
+
+const emptyStar =
+    "https://cdn-icons-png.flaticon.com/512/1828/1828970.png";
+
+const filledStar =
+    "https://cdn-icons-png.flaticon.com/512/1828/1828884.png";
+
+const star = document.getElementById("star");
+
+let fixed = false;
+
+star.addEventListener("mouseover", function () {
+    if (!fixed) {
+        star.src = filledStar;
+    }
+});
+
+star.addEventListener("mouseout", function () {
+    if (!fixed) {
+        star.src = emptyStar;
+    }
+});
+
+star.addEventListener("click", function () {
+
+    fixed = !fixed;
+
+    if (fixed) {
+        star.src = filledStar;
+    } else {
+        star.src = emptyStar;
+    }
+});
+
+</script>
+
+</body>
+</html>
