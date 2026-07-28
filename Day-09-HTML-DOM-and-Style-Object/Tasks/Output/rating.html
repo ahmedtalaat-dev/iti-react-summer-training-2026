@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+  <head>
+    <title>5 Star Rating</title>
+    <style>
+      .star {
+        width: 50px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="rating">
+      <img
+        class="star"
+        data-value="1"
+        src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png"
+      />
+
+      <img
+        class="star"
+        data-value="2"
+        src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png"
+      />
+
+      <img
+        class="star"
+        data-value="3"
+        src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png"
+      />
+
+      <img
+        class="star"
+        data-value="4"
+        src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png"
+      />
+
+      <img
+        class="star"
+        data-value="5"
+        src="https://cdn-icons-png.flaticon.com/512/1828/1828970.png"
+      />
+    </div>
+
+    <p id="result">Rating: 0</p>
+
+    <script>
+      const emptyStar =
+        "https://cdn-icons-png.flaticon.com/512/1828/1828970.png";
+
+      const filledStar =
+        "https://cdn-icons-png.flaticon.com/512/1828/1828884.png";
+
+      const stars = document.querySelectorAll(".star");
+
+      let selectedRating = 0;
+
+      function fillStars(rating) {
+        stars.forEach(function (star, index) {
+          if (index < rating) {
+            star.src = filledStar;
+          } else {
+            star.src = emptyStar;
+          }
+        });
+      }
+
+      stars.forEach(function (star, index) {
+        star.addEventListener("mouseover", function () {
+          fillStars(index + 1);
+        });
+
+        star.addEventListener("click", function () {
+          selectedRating = index + 1;
+
+          fillStars(selectedRating);
+
+          document.getElementById("result").textContent =
+            "Rating: " + selectedRating;
+        });
+      });
+
+      document
+        .getElementById("rating")
+        .addEventListener("mouseleave", function () {
+          fillStars(selectedRating);
+        });
+    </script>
+  </body>
+</html>
