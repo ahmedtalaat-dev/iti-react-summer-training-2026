@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Promises Demo</title>
+</head>
+<body>
+
+    <div id="content"></div>
+
+    <script>
+
+        const content = document.getElementById("content");
+
+        function welcomeMessage() {
+
+            return new Promise(resolve => {
+
+                setTimeout(() => {
+
+                    content.innerHTML += "<h2>Welcome User</h2>";
+
+                    resolve();
+
+                }, 3000);
+
+            });
+
+        }
+
+        function showImage() {
+
+            return new Promise(resolve => {
+
+                content.innerHTML +=
+                "<img src='https://via.placeholder.com/200'>";
+
+                resolve();
+
+            });
+
+        }
+
+        function thanksMessage() {
+
+            return new Promise(resolve => {
+
+                setTimeout(() => {
+
+                    content.innerHTML += "<h2>Thanks For Visiting</h2>";
+
+                    resolve();
+
+                }, 3000);
+
+            });
+
+        }
+
+        function redirectPage() {
+
+            window.location.href = "https://www.google.com";
+
+        }
+
+        welcomeMessage()
+            .then(showImage)
+            .then(thanksMessage)
+            .then(redirectPage);
+
+    </script>
+
+</body>
+</html>
