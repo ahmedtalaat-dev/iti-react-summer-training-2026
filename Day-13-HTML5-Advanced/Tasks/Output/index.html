@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel Planner</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        background: #f5f5f5;
+      }
+
+      header {
+        background: #0077b6;
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
+
+      header img {
+        width: 60px;
+        vertical-align: middle;
+      }
+
+      nav {
+        background: #023e8a;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin: 15px;
+        font-weight: bold;
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      section,
+      aside {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      article {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+
+      input,
+      button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+      }
+
+      button {
+        background: #0077b6;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #023e8a;
+      }
+
+      canvas {
+        border: 2px solid black;
+        margin-top: 20px;
+      }
+
+      footer {
+        background: #222;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 20px;
+      }
+
+      #tooltip {
+        position: absolute;
+        display: none;
+        background: black;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>🌍 Travel Planner</h1>
+      <p>Plan Your Dream Vacation</p>
+    </header>
+
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Trips</a>
+      <a href="#">Destinations</a>
+      <a href="#">Contact</a>
+    </nav>
+
+    <main>
+      <section>
+        <h2>Trip Registration</h2>
+
+        <form id="tripForm">
+          <label>Name</label>
+          <input
+            type="text"
+            id="name"
+            required
+            pattern="[A-Za-z ]{3,}"
+            placeholder="Enter your name"
+          />
+
+          <label>Trip Date</label>
+          <input type="date" id="date" required />
+
+          <label>Budget ($)</label>
+          <input type="range" id="budget" min="100" max="10000" value="1000" />
+
+          <p>Budget: <span id="budgetValue">1000</span> $</p>
+
+          <label>Destination</label>
+          <input list="places" id="destination" required />
+
+          <datalist id="places">
+            <option value="Paris"></option>
+            <option value="London"></option>
+            <option value="Tokyo"></option>
+            <option value="Dubai"></option>
+            <option value="New York"></option>
+            <option value="Rome"></option>
+          </datalist>
+
+          <button type="submit">Save Trip</button>
+        </form>
+
+        <h3 style="margin-top: 20px">Last Saved Trip</h3>
+
+        <div id="savedTrip">No trip saved.</div>
+
+        <article>
+          <h3>Paris</h3>
+          <p>The city of lights with beautiful landmarks.</p>
+        </article>
+
+        <article>
+          <h3>Tokyo</h3>
+          <p>A perfect blend of tradition and technology.</p>
+        </article>
+      </section>
+
+      <aside>
+        <h2>Travel Tips</h2>
+
+        <ul>
+          <li>Carry your passport.</li>
+          <li>Book flights early.</li>
+          <li>Keep emergency contacts.</li>
+          <li>Travel insurance is recommended.</li>
+        </ul>
+
+        <h2 style="margin-top: 25px">Canvas Face</h2>
+
+        <canvas id="faceCanvas" width="250" height="250"> </canvas>
+
+        <h2 style="margin-top: 25px">SVG Face</h2>
+
+        <div style="position: relative">
+          <svg width="250" height="250">
+            <circle
+              cx="125"
+              cy="125"
+              r="90"
+              fill="#FFD966"
+              stroke="black"
+              stroke-width="2"
+            />
+
+            <circle id="leftEye" cx="90" cy="100" r="10" fill="black" />
+
+            <circle id="rightEye" cx="160" cy="100" r="10" fill="black" />
+
+            <ellipse id="nose" cx="125" cy="130" rx="8" ry="15" fill="brown" />
+
+            <ellipse id="mouth" cx="125" cy="170" rx="35" ry="12" fill="red" />
+          </svg>
+
+          <div id="tooltip"></div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <p>Travel Planner App</p>
+      <p>Email: contact@travel.com</p>
+      <p>© 2026 All Rights Reserved.</p>
+    </footer>
+
+    <script>
+      const budget = document.getElementById("budget");
+      const budgetValue = document.getElementById("budgetValue");
+      const name = document.getElementById("name");
+
+      budget.oninput = function () {
+        budgetValue.textContent = this.value;
+        sessionStorage.setItem("budget", this.value);
+      };
+
+      if (sessionStorage.getItem("budget")) {
+        budget.value = sessionStorage.getItem("budget");
+        budgetValue.textContent = budget.value;
+      }
+
+      const form = document.getElementById("tripForm");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const trip = {
+          name: name.value,
+          date: date.value,
+          budget: budget.value,
+          destination: destination.value,
+        };
+
+        localStorage.setItem("trip", JSON.stringify(trip));
+
+        displayTrip();
+
+        alert("Trip Saved!");
+      });
+
+      function displayTrip() {
+        const data = localStorage.getItem("trip");
+
+        if (data) {
+          const trip = JSON.parse(data);
+
+          document.getElementById("savedTrip").innerHTML = `
+<b>Name:</b> ${trip.name}<br>
+<b>Date:</b> ${trip.date}<br>
+<b>Budget:</b> $${trip.budget}<br>
+<b>Destination:</b> ${trip.destination}
+`;
+        }
+      }
+
+      displayTrip();
+
+      // CANVAS
+
+      const canvas = document.getElementById("faceCanvas");
+      const ctx = canvas.getContext("2d");
+
+      function drawFace(smile = false, scale = 1) {
+        ctx.clearRect(0, 0, 250, 250);
+
+        ctx.save();
+
+        ctx.translate(125, 125);
+        ctx.scale(scale, 1);
+        ctx.translate(-125, -125);
+
+        ctx.beginPath();
+        ctx.arc(125, 125, 80, 0, Math.PI * 2);
+        ctx.fillStyle = "yellow";
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(95, 100, 8, 0, Math.PI * 2);
+        ctx.fillStyle = "black";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(155, 100, 8, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+
+        if (smile) {
+          ctx.arc(125, 140, 40, 0, Math.PI, false);
+        } else {
+          ctx.arc(125, 190, 40, Math.PI, 0, false);
+        }
+
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      drawFace(false, 1);
+
+      canvas.onmousedown = function () {
+        drawFace(true, 1.3);
+      };
+
+      canvas.onmouseup = function () {
+        drawFace(false, 1);
+      };
+
+      // SVG
+
+      const tooltip = document.getElementById("tooltip");
+
+      function setup(id, name, color) {
+        const el = document.getElementById(id);
+        const original = el.getAttribute("fill");
+
+        el.addEventListener("mouseover", function (e) {
+          el.setAttribute("fill", color);
+
+          tooltip.style.display = "block";
+          tooltip.innerHTML = name;
+          tooltip.style.left = e.pageX + 10 + "px";
+          tooltip.style.top = e.pageY + 10 + "px";
+        });
+
+        el.addEventListener("mousemove", function (e) {
+          tooltip.style.left = e.pageX + 10 + "px";
+          tooltip.style.top = e.pageY + 10 + "px";
+        });
+
+        el.addEventListener("mouseout", function () {
+          el.setAttribute("fill", original);
+
+          tooltip.style.display = "none";
+        });
+      }
+
+      setup("leftEye", "Left Eye", "blue");
+      setup("rightEye", "Right Eye", "blue");
+      setup("nose", "Nose", "green");
+      setup("mouth", "Mouth", "purple");
+    </script>
+  </body>
+</html>
