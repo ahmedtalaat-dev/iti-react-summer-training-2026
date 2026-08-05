@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML5 Assignment</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        margin: 20px;
+      }
+
+      section {
+        background: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      button {
+        padding: 8px 15px;
+        margin: 5px;
+        cursor: pointer;
+      }
+
+      input {
+        padding: 8px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      li {
+        margin: 8px 0;
+      }
+
+      .deleteBtn {
+        margin-left: 10px;
+        background: red;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+      }
+
+      #locationResult,
+      #error {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+
+      video {
+        width: 500px;
+        max-width: 100%;
+        background: black;
+      }
+
+      .controls {
+        margin-top: 10px;
+      }
+
+      .math {
+        font-size: 28px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>HTML5 Assignment</h1>
+
+    <h2 id="visitCounter"></h2>
+
+    <!-- Task 1 -->
+
+    <section>
+      <h2>My Location</h2>
+
+      <button onclick="getLocation()">Get My Current Location</button>
+
+      <button onclick="trackLocation()">Track My Movement</button>
+
+      <button onclick="stopTracking()">Stop Tracking</button>
+
+      <div id="locationResult"></div>
+      <div id="error" style="color: red"></div>
+    </section>
+
+    <!-- Task 2 -->
+
+    <section>
+      <h2>MathML Equations</h2>
+
+      <div class="math">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mrow>
+            <mi>A</mi>
+
+            <mo>=</mo>
+
+            <mi>π</mi>
+
+            <msup>
+              <mi>r</mi>
+
+              <mn>2</mn>
+            </msup>
+          </mrow>
+        </math>
+      </div>
+
+      <br />
+
+      <div class="math">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mrow>
+            <msup><mi>a</mi><mn>2</mn></msup>
+
+            <mo>+</mo>
+
+            <msup><mi>b</mi><mn>2</mn></msup>
+
+            <mo>=</mo>
+
+            <msup><mi>c</mi><mn>2</mn></msup>
+          </mrow>
+        </math>
+      </div>
+    </section>
+
+    <!-- Task 3 -->
+
+    <section>
+      <h2>Todo List</h2>
+
+      <input id="taskInput" type="text" placeholder="Enter task" />
+
+      <button onclick="addTask()">Add</button>
+
+      <button onclick="clearTasks()">Clear All</button>
+
+      <ul id="taskList"></ul>
+    </section>
+
+    <!-- Task 4 Multimedia -->
+
+    <section>
+      <h2>Media Player</h2>
+
+      <video id="video">
+        <source src="https://youtu.be/kwvj9bv_rsQ?si=th-UtjFsoim8GSBW" type="video/mp4" />
+
+        <source src="https://youtu.be/kwvj9bv_rsQ?si=th-UtjFsoim8GSBW" type="video/webm" />
+
+        Your browser does not support HTML5 video.
+      </video>
+
+      <div class="controls">
+        <button id="playBtn">Play</button>
+
+        <button id="muteBtn">Mute</button>
+
+        Volume
+
+        <input type="range" id="volume" min="0" max="1" step="0.1" value="1" />
+
+        <span id="timeDisplay">0:00 / 0:00</span>
+      </div>
+
+      <br /><br />
+
+      <audio controls>
+        <source src="sample.mp3" type="audio/mpeg" />
+
+        Your browser does not support audio.
+      </audio>
+    </section>
+
+    <script>
+      // Visit Counter
+
+      let visits = localStorage.getItem("visits");
+
+      if (visits == null) {
+        visits = 0;
+      }
+
+      visits++;
+
+      localStorage.setItem("visits", visits);
+
+      document.getElementById("visitCounter").innerHTML =
+        "Page Visits: " + visits;
+
+      // Geolocation
+
+      let watchID = null;
+
+      function showPosition(position) {
+        document.getElementById("error").innerHTML = "";
+
+        document.getElementById("locationResult").innerHTML =
+          "Latitude: " +
+          position.coords.latitude +
+          "<br>Longitude: " +
+          position.coords.longitude;
+      }
+
+      function showError(error) {
+        let msg = "";
+
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            msg = "Permission denied.";
+            break;
+
+          case error.POSITION_UNAVAILABLE:
+            msg = "Location unavailable.";
+            break;
+
+          case error.TIMEOUT:
+            msg = "Request timed out.";
+            break;
+
+          default:
+            msg = "Unknown error.";
+        }
+
+        document.getElementById("error").innerHTML = msg;
+      }
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+          document.getElementById("error").innerHTML =
+            "Geolocation is not supported.";
+        }
+      }
+
+      function trackLocation() {
+        if (navigator.geolocation) {
+          watchID = navigator.geolocation.watchPosition(
+            showPosition,
+            showError,
+          );
+        } else {
+          document.getElementById("error").innerHTML =
+            "Geolocation is not supported.";
+        }
+      }
+
+      function stopTracking() {
+        if (watchID != null) {
+          navigator.geolocation.clearWatch(watchID);
+
+          document.getElementById("locationResult").innerHTML +=
+            "<br>Tracking stopped.";
+        }
+      }
+
+      // Todo List
+
+      let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+      function saveTasks() {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+      }
+
+      function renderTasks() {
+        let list = document.getElementById("taskList");
+
+        list.innerHTML = "";
+
+        tasks.forEach(function (task, index) {
+          let li = document.createElement("li");
+
+          li.textContent = task;
+
+          let btn = document.createElement("button");
+
+          btn.innerHTML = "Delete";
+
+          btn.className = "deleteBtn";
+
+          btn.onclick = function () {
+            tasks.splice(index, 1);
+
+            saveTasks();
+
+            renderTasks();
+          };
+
+          li.appendChild(btn);
+
+          list.appendChild(li);
+        });
+      }
+
+      function addTask() {
+        let input = document.getElementById("taskInput");
+
+        let task = input.value.trim();
+
+        if (task === "") return;
+
+        tasks.push(task);
+
+        saveTasks();
+
+        renderTasks();
+
+        input.value = "";
+      }
+
+      function clearTasks() {
+        tasks = [];
+
+        saveTasks();
+
+        renderTasks();
+      }
+
+      renderTasks();
+
+      // Video Controls
+
+      const video = document.getElementById("video");
+
+      const playBtn = document.getElementById("playBtn");
+
+      const muteBtn = document.getElementById("muteBtn");
+
+      const volume = document.getElementById("volume");
+
+      const time = document.getElementById("timeDisplay");
+
+      playBtn.onclick = function () {
+        if (video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      };
+
+      video.onplay = function () {
+        playBtn.innerHTML = "Pause";
+      };
+
+      video.onpause = function () {
+        playBtn.innerHTML = "Play";
+      };
+
+      volume.oninput = function () {
+        video.volume = this.value;
+      };
+
+      muteBtn.onclick = function () {
+        video.muted = !video.muted;
+
+        muteBtn.innerHTML = video.muted ? "Unmute" : "Mute";
+      };
+
+      function formatTime(seconds) {
+        if (isNaN(seconds)) return "0:00";
+
+        let min = Math.floor(seconds / 60);
+
+        let sec = Math.floor(seconds % 60);
+
+        if (sec < 10) sec = "0" + sec;
+
+        return min + ":" + sec;
+      }
+
+      video.ontimeupdate = function () {
+        time.innerHTML =
+          formatTime(video.currentTime) + " / " + formatTime(video.duration);
+      };
+
+      video.onloadedmetadata = function () {
+        time.innerHTML =
+          formatTime(video.currentTime) + " / " + formatTime(video.duration);
+      };
+    </script>
+  </body>
+</html>
